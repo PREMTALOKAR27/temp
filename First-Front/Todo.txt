@@ -1,0 +1,7 @@
+From Pranav Shinde:
+In admin panel use auth store for bearer authentication if my account is goes down.
+Then admin panel will stop working.
+
+There is problem in redeem points in property and reward section. Api not working in old website and I am not able to find the way to solve this issue.
+
+Delete unused file to reduced the timing of website loading.
