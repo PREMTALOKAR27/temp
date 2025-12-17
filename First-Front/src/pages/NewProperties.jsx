@@ -212,145 +212,20 @@ const NewProperties = () => {
 
   // locations are fetched independently; no state filter
 
-  // Sample properties - Exact match to Figma Design
-  const sampleProperties = [
-    {
-      id: 1,
-      images: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop&auto=format"],
-      name: "3-BHK Sea View Flat",
-      location: "Navi Mumbai, Vashi",
-      price: 78000,
-      discount: 0,
-      isNew: true,
-      propertySpecifications: {
-        bedrooms: 4,
-        bathrooms: 2,
-        areaSqFt: "980 SqFt"
-      },
-      amenities: {
-        hasPark: true,
-        has24_7Security: true,
-        hasVisitorParking: true,
-        hasTerraceGarden: true
-      }
-    },
-    {
-      id: 2,
-      images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&auto=format"],
-      name: "Duplex with Garden",
-      location: "Koregaon Park",
-      price: 175000,
-      discount: 0,
-      isNew: false,
-      propertySpecifications: {
-        bedrooms: 3,
-        bathrooms: 2,
-        areaSqFt: "980 SqFt"
-      },
-      amenities: {
-        hasPark: true,
-        has24_7Security: true,
-        hasVisitorParking: true,
-        hasTerraceGarden: true
-      }
-    },
-    {
-      id: 3,
-      images: ["https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop&auto=format"],
-      name: "2-BHK with Balcony",
-      location: "Andheri West",
-      price: 125000,
-      discount: 0,
-      isNew: false,
-      propertySpecifications: {
-        bedrooms: 4,
-        bathrooms: 2,
-        areaSqFt: "980 SqFt"
-      },
-      amenities: {
-        hasPark: true,
-        has24_7Security: true,
-        hasVisitorParking: true,
-        hasTerraceGarden: true
-      }
-    },
-    {
-      id: 4,
-      images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&auto=format"],
-      name: "4-BHK Penthouse",
-      location: "Worli",
-      price: 290000,
-      discount: 0,
-      isNew: true,
-      propertySpecifications: {
-        bedrooms: 4,
-        bathrooms: 2,
-        areaSqFt: "980 SqFt"
-      },
-      amenities: {
-        hasPark: true,
-        has24_7Security: true,
-        hasVisitorParking: true,
-        hasTerraceGarden: true
-      }
-    },
-    {
-      id: 5,
-      images: ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&auto=format"],
-      name: "2-Room Studio",
-      location: "Vashi",
-      price: 78000,
-      discount: 0,
-      isNew: false,
-      propertySpecifications: {
-        bedrooms: 4,
-        bathrooms: 2,
-        areaSqFt: "980 SqFt"
-      },
-      amenities: {
-        hasPark: true,
-        has24_7Security: true,
-        hasVisitorParking: true,
-        hasTerraceGarden: true
-      }
-    },
-    {
-      id: 6,
-      images: ["https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&h=600&fit=crop&auto=format"],
-      name: "3-BHK Near Metro",
-      location: "Ghatkopar",
-      price: 145000,
-      discount: 0,
-      isNew: false,
-      propertySpecifications: {
-        bedrooms: 4,
-        bathrooms: 2,
-        areaSqFt: "980 SqFt"
-      },
-      amenities: {
-        hasPark: true,
-        has24_7Security: true,
-        hasVisitorParking: true,
-        hasTerraceGarden: true
-      }
-    },
-  ];
-
   const fetchProperties = async () => {
     try {
       const response = await axios.get("/api/v1/properties");
-      if (response.data && response.data.length > 0) {
+      if (Array.isArray(response.data)) {
         setProperties(response.data);
       } else {
-        // Use sample data if API returns empty
-        setProperties(sampleProperties);
+        setProperties([]);
       }
       // Attempt to fetch locations from API in parallel
       fetchLocations();
     } catch (error) {
       console.error("Error fetching properties:", error);
-      // Use sample data on error
-      setProperties(sampleProperties);
+      // On error, clear properties; UI will show "No properties found" message
+      setProperties([]);
     }
   };
 
